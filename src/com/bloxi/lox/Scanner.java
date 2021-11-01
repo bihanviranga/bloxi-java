@@ -108,6 +108,9 @@ class Scanner {
           // this is a comment
           while (peek() != '\n' && !isAtEnd())
             advance();
+        } else if (match('*')) {
+          // block comment
+          blockComment();
         } else {
           addToken(TokenType.SLASH);
         }
@@ -162,7 +165,7 @@ class Scanner {
   }
 
   /**
-   * Checks if the next char in source matches a given value.
+   * Checks if the next char in source matches a given value. Consumes character.
    *
    * @param expected expected char
    * @return true if next char == expected, false if otherwise. Also false if EOF
@@ -306,5 +309,30 @@ class Scanner {
     if (type == null)
       type = TokenType.IDENTIFIER;
     addToken(type);
+  }
+
+  /**
+   * Advances until the end of block comments, incrementing line as needed
+   */
+  private void blockComment() {
+    // Peek until '*' or EOF is found
+    while (!(peek() == '*' && peekNext() == '/') && !isAtEnd()) {
+      if (peek() == '\n')
+        line++;
+      advance();
+    }
+
+    // If EOF is found first, its an error
+    if (isAtEnd()) {
+      Lox.error(line, String.format("Unterminated block comment: %s", source.substring(start, current)));
+      return;
+    }
+
+    // If '*' is found, and the next is a '/', block comment ends
+    if (peek() == '*' && peekNext() == '/') {
+      // consume these two
+      advance();
+      advance();
+    }
   }
 }
