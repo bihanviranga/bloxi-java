@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="Bloxi - Bihan's Lox Intepreter" default="info">
+  <property file="build.properties" />
+  <target name="info">
+    <echo>Bloxi version ${bloxi_version}</echo>
+    <echo>${ant.version}</echo>
+  </target>
+
+  <target name="clean" depends="info">
+    <echo>Cleaning...</echo>
+    <delete dir="build" />
+  </target>
+
+  <target name="compile" depends="info, clean">
+    <echo>Compiling...</echo>
+    <mkdir dir="build/classes" />
+    <javac srcdir="src" destdir="build/classes" />
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="build/jar" />
+    <jar destfile="build/jar/bloxi.jar" basedir="build/classes">
+      <manifest>
+        <attribute name="Main-Class" value="com.bloxi.lox.Lox" />
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run" depends="jar">
+    <java jar="build/jar/bloxi.jar" fork="true" />
+  </target>
+</project>
