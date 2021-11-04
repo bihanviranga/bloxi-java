@@ -27,6 +27,11 @@ class AstPrinter implements Expr.Visitor<String> {
     return parenthesize(expr.operator.lexeme, expr.right);
   }
 
+  @Override
+  public String visitTernaryExpr(Expr.Ternary expr) {
+    return parenthesize("?", expr.condition, expr.trueExpr, expr.falseExpr);
+  }
+
   private String parenthesize(String name, Expr... exprs) {
     StringBuilder builder = new StringBuilder();
 
@@ -42,15 +47,21 @@ class AstPrinter implements Expr.Visitor<String> {
 
   // NOTE: Driver code for testing
   // public static void main(String[] args) {
-  // Token operator_star = new Token(TokenType.STAR, "*", null, 1);
+  //// 1 + 2 ? 3 * 4 : 5 / 6;
   // Token operator_plus = new Token(TokenType.PLUS, "+", null, 1);
-  // Expr lhs = new Expr.Literal("hello");
-  // Expr group = new Expr.Binary(new Expr.Literal(42), operator_star, new
-  // Expr.Literal(69));
-  // Expr rhs = new Expr.Grouping(group);
+  // Token operator_star = new Token(TokenType.STAR, "*", null, 1);
+  // Token operator_slash = new Token(TokenType.SLASH, "/", null, 1);
 
-  // Expr expression = new Expr.Binary(lhs, operator_plus, rhs);
+  // Expr condition = new Expr.Binary(new Expr.Literal(1), operator_plus, new
+  // Expr.Literal(2));
+  // Expr trueExpr = new Expr.Binary(new Expr.Literal(3), operator_star, new
+  // Expr.Literal(4));
+  // Expr falseExpr = new Expr.Binary(new Expr.Literal(5), operator_slash, new
+  // Expr.Literal(6));
+
+  // Expr ternary = new Expr.Ternary(condition, trueExpr, falseExpr);
+
   // AstPrinter printer = new AstPrinter();
-  // System.out.println(printer.print(expression));
+  // System.out.println(printer.print(ternary));
   // }
 }

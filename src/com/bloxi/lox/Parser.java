@@ -26,12 +26,28 @@ class Parser {
   }
 
   private Expr separator() {
-    Expr expr = equality();
+    Expr expr = conditional();
 
     while (match(TokenType.COMMA)) {
       Token operator = previous();
-      Expr right = equality();
+      Expr right = conditional();
       expr = new Expr.Binary(expr, operator, right);
+    }
+
+    return expr;
+  }
+
+  private Expr conditional() {
+    Expr expr = equality();
+
+    while (match(TokenType.QUESTION_MARK)) {
+      Expr trueExpr = equality();
+      Expr falseExpr = null;
+      while (match(TokenType.COLON)) {
+        falseExpr = equality();
+      }
+
+      expr = new Expr.Ternary(expr, trueExpr, falseExpr);
     }
 
     return expr;

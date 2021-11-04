@@ -12,10 +12,11 @@ def main():
 
     baseName = "Expr"
     astTypes = [
-        ["Binary", ["Expr left", "Token operator", "Expr right"]],
-        ["Grouping", ["Expr expression"]],
         ["Literal", ["Object value"]],
         ["Unary", ["Token operator", "Expr right"]],
+        ["Binary", ["Expr left", "Token operator", "Expr right"]],
+        ["Ternary", ["Expr condition", "Expr trueExpr", "Expr falseExpr"]],
+        ["Grouping", ["Expr expression"]],
     ]
 
     defineAst(outputDir, baseName, astTypes)
