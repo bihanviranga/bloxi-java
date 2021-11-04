@@ -50,9 +50,9 @@ public class Lox {
     List<Token> tokens = scanner.scanTokens();
 
     // For now just print the tokens
-    // for (Token token : tokens) {
-    // System.out.println(token);
-    // }
+    for (Token token : tokens) {
+      System.out.println(token);
+    }
 
     Parser parser = new Parser(tokens);
     Expr expression = parser.parse();
@@ -63,6 +63,7 @@ public class Lox {
 
     // For now just print the AST nodes
     AstPrinter printer = new AstPrinter();
+    System.out.print("[parser] ");
     System.out.println(printer.print(expression));
 
   }
