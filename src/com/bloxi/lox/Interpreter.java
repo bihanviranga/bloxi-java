@@ -62,6 +62,9 @@ class Interpreter implements Expr.Visitor<Object> {
         return (double) lhs * (double) rhs;
       case SLASH:
         checkNumberOperands(expr.operator, lhs, rhs);
+        if ((double) rhs == 0) {
+          throw new RuntimeError(expr.operator, "Cannot divide by zero.");
+        }
         return (double) lhs / (double) rhs;
       case PLUS:
         if (lhs instanceof Double && rhs instanceof Double)
@@ -74,7 +77,7 @@ class Interpreter implements Expr.Visitor<Object> {
           return stringify(lhs) + stringify(rhs);
         }
 
-        throw new RuntimeError(expr.operator, "At least one of the operands must be a string");
+        throw new RuntimeError(expr.operator, "At least one of the operands must be a string.");
 
     }
 
