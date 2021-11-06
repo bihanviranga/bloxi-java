@@ -125,12 +125,37 @@ class Parser {
 
     if (match(TokenType.LEFT_PAREN)) {
       Expr expr = expression();
-      consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.");
+      consume(TokenType.RIGHT_PAREN, "Expected ')' after expression.");
       return new Expr.Grouping(expr);
     }
 
     // nothing matched
-    throw error(peek(), "Expected expression.");
+    return errorProductions();
+    // throw error(peek(), "Expected expression.");
+  }
+
+  // TODO: right paren without left
+  // TODO: ternary should be handled differently
+  private Expr errorProductions() {
+    Token nextToken = advance();
+    switch (nextToken.type) {
+      // binary or ternary operators appearing first is an error
+      case COMMA:
+      case BANG_EQUAL:
+      case EQUAL_EQUAL:
+      case GREATER:
+      case GREATER_EQUAL:
+      case LESS:
+      case LESS_EQUAL:
+      case PLUS:
+      case SLASH:
+      case STAR:
+        // consume next expression for binary
+        expression();
+        throw error(nextToken, "Binary operator expected a left-hand operand.");
+      default:
+        throw error(nextToken, "Expected expression.");
+    }
   }
 
   /**
