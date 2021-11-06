@@ -136,8 +136,17 @@ class Parser {
   // TODO: right paren without left
   // TODO: ternary should be handled differently
   private Expr errorProductions() {
-    if (isAtEnd())
-      throw error(previous(), "Unexpected EOF");
+    // Handling unexpected EOF
+    if (isAtEnd()) {
+      Token errToken;
+      if (current == 0) {
+        // immediate EOF means empty source
+        errToken = tokens.get(current);
+      } else {
+        errToken = previous();
+      }
+      throw error(errToken, "Unexpected EOF");
+    }
 
     Token nextToken = advance();
     switch (nextToken.type) {
