@@ -11,7 +11,7 @@
     <delete dir="build" />
   </target>
 
-  <target name="compile" depends="info, clean">
+  <target name="compile" depends="info">
     <echo>Compiling...</echo>
     <mkdir dir="build/classes" />
     <javac srcdir="src" destdir="build/classes" />
