@@ -131,12 +131,14 @@ class Parser {
 
     // nothing matched
     return errorProductions();
-    // throw error(peek(), "Expected expression.");
   }
 
   // TODO: right paren without left
   // TODO: ternary should be handled differently
   private Expr errorProductions() {
+    if (isAtEnd())
+      throw error(previous(), "Unexpected EOF");
+
     Token nextToken = advance();
     switch (nextToken.type) {
       // binary or ternary operators appearing first is an error
