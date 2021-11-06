@@ -10,6 +10,7 @@ def main():
     else:
         outputDir = sys.argv[1]
 
+    # defining expression classes
     baseName = "Expr"
     astTypes = [
         ["Literal", ["Object value"]],
@@ -18,7 +19,14 @@ def main():
         ["Ternary", ["Expr condition", "Expr trueExpr", "Expr falseExpr"]],
         ["Grouping", ["Expr expression"]],
     ]
+    defineAst(outputDir, baseName, astTypes)
 
+    # defining statement classes
+    baseName = "Stmt"
+    astTypes = [
+        ["Expression", ["Expr expression"]],
+        ["Print", ["Expr expression"]],
+    ]
     defineAst(outputDir, baseName, astTypes)
 
 
