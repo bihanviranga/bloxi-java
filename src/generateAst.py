@@ -18,6 +18,7 @@ def main():
         ["Binary", ["Expr left", "Token operator", "Expr right"]],
         ["Ternary", ["Expr condition", "Expr trueExpr", "Expr falseExpr"]],
         ["Grouping", ["Expr expression"]],
+        ["Variable", ["Token name"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 
@@ -26,6 +27,7 @@ def main():
     astTypes = [
         ["Expression", ["Expr expression"]],
         ["Print", ["Expr expression"]],
+        ["Var", ["Token name", "Expr initializer"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 
