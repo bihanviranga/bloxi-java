@@ -72,12 +72,33 @@ class Parser {
   }
 
   private Expr separator() {
-    Expr expr = conditional();
+    Expr expr = assignment();
 
     while (match(TokenType.COMMA)) {
       Token operator = previous();
-      Expr right = conditional();
+      Expr right = assignment();
       expr = new Expr.Binary(expr, operator, right);
+    }
+
+    return expr;
+  }
+
+  private Expr assignment() {
+    // We are evaluating the lhs first as if it were an expression.
+    // Later only we check if it's a Expr.Variable
+    Expr expr = conditional();
+
+    if (match(TokenType.EQUAL)) {
+      Token equals = previous();
+      Expr value = assignment();
+
+      // The lhs can't be any Expr. It must be a Expr.Variable
+      if (expr instanceof Expr.Variable) {
+        Token name = ((Expr.Variable) expr).name;
+        return new Expr.Assign(name, value);
+      }
+
+      error(equals, "Cannot assign. Invalid target.");
     }
 
     return expr;

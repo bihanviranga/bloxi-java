@@ -19,6 +19,7 @@ def main():
         ["Ternary", ["Expr condition", "Expr trueExpr", "Expr falseExpr"]],
         ["Grouping", ["Expr expression"]],
         ["Variable", ["Token name"]],
+        ["Assign", ["Token name", "Expr value"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 

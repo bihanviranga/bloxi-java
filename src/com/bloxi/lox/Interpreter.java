@@ -189,4 +189,13 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     return object.toString();
   }
+
+  @Override
+  public Object visitAssignExpr(Expr.Assign expr) {
+    Object value = evaluate(expr.value);
+    environment.assign(expr.name, value);
+    // Assign statement returns the assigned value.
+    // Ex: `print a = 2` prints 2
+    return value;
+  }
 }

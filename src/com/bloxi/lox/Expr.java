@@ -10,6 +10,7 @@ abstract class Expr {
     R visitTernaryExpr (Ternary expr);
     R visitGroupingExpr (Grouping expr);
     R visitVariableExpr (Variable expr);
+    R visitAssignExpr (Assign expr);
   }
 
   abstract <R> R accept(Visitor<R> visitor);
@@ -99,6 +100,21 @@ abstract class Expr {
     @Override
     <R> R accept(Visitor<R> visitor) {
       return visitor.visitVariableExpr(this);
+    }
+  }
+
+  static class Assign extends Expr {
+    final Token name;
+    final Expr value;
+
+    Assign(Token name, Expr value) {
+      this.name = name;
+      this.value = value;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitAssignExpr(this);
     }
   }
 }
