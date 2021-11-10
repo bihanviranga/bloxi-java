@@ -52,6 +52,9 @@ class Parser {
     if (match(TokenType.PRINT))
       return printStatement();
 
+    if (match(TokenType.LEFT_BRACE))
+      return new Stmt.Block(block());
+
     return expressionStatement();
   }
 
@@ -363,5 +366,21 @@ class Parser {
    */
   private Token previous() {
     return tokens.get(current - 1);
+  }
+
+  /**
+   * Returns a list of statements until a closing brace is encountered.
+   * 
+   * @return list of statements
+   */
+  private List<Stmt> block() {
+    List<Stmt> statements = new ArrayList<>();
+
+    while (!check(TokenType.RIGHT_BRACE) && !isAtEnd()) {
+      statements.add(declaration());
+    }
+
+    consume(TokenType.RIGHT_BRACE, "Expected '}' after block.");
+    return statements;
   }
 }

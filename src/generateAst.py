@@ -26,6 +26,7 @@ def main():
     # defining statement classes
     baseName = "Stmt"
     astTypes = [
+        ["Block", ["List<Stmt> statements"]],
         ["Expression", ["Expr expression"]],
         ["Print", ["Expr expression"]],
         ["Var", ["Token name", "Expr initializer"]],
