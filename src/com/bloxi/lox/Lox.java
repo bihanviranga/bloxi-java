@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Lox {
   private static final Interpreter interpreter = new Interpreter();
+  static boolean replMode = false;
   static boolean hadError = false;
   static boolean hadRuntimeError = false;
 
@@ -35,6 +36,7 @@ public class Lox {
   }
 
   private static void runPrompt() throws IOException {
+    replMode = true;
     InputStreamReader input = new InputStreamReader(System.in);
     BufferedReader reader = new BufferedReader(input);
 
@@ -52,11 +54,6 @@ public class Lox {
   private static void run(String source) {
     Scanner scanner = new Scanner(source);
     List<Token> tokens = scanner.scanTokens();
-
-    // For now just print the tokens
-    // for (Token token : tokens) {
-    // System.out.println(token);
-    // }
 
     Parser parser = new Parser(tokens);
     List<Stmt> statements = parser.parse();
