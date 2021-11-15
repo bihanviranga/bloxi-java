@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+SUITE="$@"
+if [ -z "$SUITE" ]
+then
+  SUITE="jlox"
+fi
+
+cd orig
+dart tool/bin/test.dart "$SUITE" --interpreter ../bloxi --arguments -t
