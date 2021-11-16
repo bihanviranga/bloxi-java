@@ -5,10 +5,11 @@
 program     -> declaration* EOF;
 declaration -> varDecl | statement;
 varDecl     -> "var" IDENTIFIER ("=" expression)? ";";
-statement   -> exprStmt | printStmt | block;
+statement   -> exprStmt | printStmt | ifStmt | block;
 block       -> "{" declaration "}";
 exprStmt    -> expression ";";
 printStmt   -> "print" expression ";";
+ifStmt      -> "if" "(" expression ")" statement ("else" statement)?;
 expression  -> separator;
 separator   -> assignment "," assignment | assignment;
 assignment  -> IDENTIFIER "=" assignment | conditional;
@@ -37,3 +38,4 @@ primary     -> NUMBER | STRING | IDENTIFIER | "true" | "false" | "nil" | "(" exp
 |            | Expression | exprStmt                                      |
 |            | Print      | printStmt                                     |
 |            | Var        | varDecl                                       |
+|            | If         | ifStmt                                        |

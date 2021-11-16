@@ -55,7 +55,24 @@ class Parser {
     if (match(TokenType.LEFT_BRACE))
       return new Stmt.Block(block());
 
+    if (match(TokenType.IF))
+      return ifStatement();
+
     return expressionStatement();
+  }
+
+  private Stmt ifStatement() {
+    consume(TokenType.LEFT_PAREN, "Expected '(' after 'if'.");
+    Expr condition = expression();
+    consume(TokenType.RIGHT_PAREN, "Expected ')' after condition.");
+
+    Stmt thenBranch = statement();
+    Stmt elseBranch = null;
+    if (match(TokenType.ELSE)) {
+      elseBranch = statement();
+    }
+
+    return new Stmt.If(condition, thenBranch, elseBranch);
   }
 
   private Stmt printStatement() {
@@ -370,7 +387,7 @@ class Parser {
 
   /**
    * Returns a list of statements until a closing brace is encountered.
-   * 
+   *
    * @return list of statements
    */
   private List<Stmt> block() {

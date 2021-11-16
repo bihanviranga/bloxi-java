@@ -30,6 +30,7 @@ def main():
         ["Expression", ["Expr expression"]],
         ["Print", ["Expr expression"]],
         ["Var", ["Token name", "Expr initializer"]],
+        ["If", ["Expr condition", "Stmt thenBranch", "Stmt elseBranch"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 
