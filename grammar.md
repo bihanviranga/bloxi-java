@@ -13,7 +13,7 @@ ifStmt      -> "if" "(" expression ")" statement ("else" statement)?;
 expression  -> separator;
 separator   -> assignment "," assignment | assignment;
 assignment  -> IDENTIFIER "=" assignment | conditional;
-conditional -> conditional "?" conditional ":" conditional | equality;
+conditional -> equality "?" conditional ":" conditional | equality;
 equality    -> comparison (("==" | "!=") comparison)*;
 comparison  -> term ((">" | ">=" | "<" | "<=") term)*;
 term        -> factor (("+" | "-") factor)*;

@@ -91,8 +91,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   @Override
   public Object visitTernaryExpr(Expr.Ternary expr) {
-    // TODO Auto-generated method stub
-    return null;
+    if (isTruthy(evaluate(expr.condition))) {
+      return evaluate(expr.trueExpr);
+    } else {
+      return evaluate(expr.falseExpr);
+    }
   }
 
   @Override

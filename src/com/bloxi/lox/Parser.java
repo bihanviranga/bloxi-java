@@ -128,10 +128,10 @@ class Parser {
     Expr expr = equality();
 
     while (match(TokenType.QUESTION_MARK)) {
-      Expr trueExpr = equality();
+      Expr trueExpr = conditional();
       Expr falseExpr = null;
       while (match(TokenType.COLON)) {
-        falseExpr = equality();
+        falseExpr = conditional();
       }
 
       expr = new Expr.Ternary(expr, trueExpr, falseExpr);
