@@ -5,12 +5,15 @@
 program     -> declaration* EOF;
 declaration -> varDecl | statement;
 varDecl     -> "var" IDENTIFIER ("=" expression)? ";";
-statement   -> exprStmt | printStmt | ifStmt | whileStmt | block;
+statement   -> exprStmt | printStmt | ifStmt | whileStmt | forStmt | block;
 block       -> "{" declaration "}";
 exprStmt    -> expression ";";
 printStmt   -> "print" expression ";";
 ifStmt      -> "if" "(" expression ")" statement ("else" statement)?;
 whileStmt   -> "while" "(" expression ")" statement;
+forStmt     -> "for" "(" (varDecl | exprStmt | ";")
+               expression? ";"
+               expression? ")" statement;
 expression  -> separator;
 separator   -> assignment "," assignment | assignment;
 assignment  -> IDENTIFIER "=" assignment | conditional;
@@ -22,7 +25,8 @@ comparison  -> term ((">" | ">=" | "<" | "<=") term)*;
 term        -> factor (("+" | "-") factor)*;
 factor      -> unary (("*" | "/") unary)*;
 unary       -> ("!" | "-") unary | primary;
-primary     -> NUMBER | STRING | IDENTIFIER | "true" | "false" | "nil" | "(" expression ")";
+primary     -> NUMBER | STRING | IDENTIFIER | "true" | "false" | "nil" |
+               "(" expression ")";
 ```
 
 ## Representations
