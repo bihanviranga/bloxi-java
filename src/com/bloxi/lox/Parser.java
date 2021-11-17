@@ -125,7 +125,7 @@ class Parser {
   }
 
   private Expr conditional() {
-    Expr expr = equality();
+    Expr expr = logical_or();
 
     while (match(TokenType.QUESTION_MARK)) {
       Expr trueExpr = conditional();
@@ -135,6 +135,30 @@ class Parser {
       }
 
       expr = new Expr.Ternary(expr, trueExpr, falseExpr);
+    }
+
+    return expr;
+  }
+
+  private Expr logical_or() {
+    Expr expr = logical_and();
+
+    while (match(TokenType.OR)) {
+      Token operator = previous();
+      Expr right = logical_and();
+      expr = new Expr.Logical(expr, operator, right);
+    }
+
+    return expr;
+  }
+
+  private Expr logical_and() {
+    Expr expr = equality();
+
+    while (match(TokenType.AND)) {
+      Token operator = previous();
+      Expr right = equality();
+      expr = new Expr.Logical(expr, operator, right);
     }
 
     return expr;

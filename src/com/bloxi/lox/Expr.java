@@ -11,6 +11,7 @@ abstract class Expr {
     R visitGroupingExpr (Grouping expr);
     R visitVariableExpr (Variable expr);
     R visitAssignExpr (Assign expr);
+    R visitLogicalExpr (Logical expr);
   }
 
   abstract <R> R accept(Visitor<R> visitor);
@@ -115,6 +116,23 @@ abstract class Expr {
     @Override
     <R> R accept(Visitor<R> visitor) {
       return visitor.visitAssignExpr(this);
+    }
+  }
+
+  static class Logical extends Expr {
+    final Expr left;
+    final Token operator;
+    final Expr right;
+
+    Logical(Expr left, Token operator, Expr right) {
+      this.left = left;
+      this.operator = operator;
+      this.right = right;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitLogicalExpr(this);
     }
   }
 }

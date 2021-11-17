@@ -20,6 +20,7 @@ def main():
         ["Grouping", ["Expr expression"]],
         ["Variable", ["Token name"]],
         ["Assign", ["Token name", "Expr value"]],
+        ["Logical", ["Expr left", "Token operator", "Expr right"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 
