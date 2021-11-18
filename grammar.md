@@ -5,7 +5,8 @@
 program     -> declaration* EOF;
 declaration -> varDecl | statement;
 varDecl     -> "var" IDENTIFIER ("=" expression)? ";";
-statement   -> exprStmt | printStmt | ifStmt | whileStmt | forStmt | block;
+statement   -> exprStmt | printStmt | ifStmt | whileStmt | forStmt | breakStmt |
+               block;
 block       -> "{" declaration "}";
 exprStmt    -> expression ";";
 printStmt   -> "print" expression ";";
@@ -14,6 +15,7 @@ whileStmt   -> "while" "(" expression ")" statement;
 forStmt     -> "for" "(" (varDecl | exprStmt | ";")
                expression? ";"
                expression? ")" statement;
+breakStmt   -> "break" ";";
 expression  -> separator;
 separator   -> assignment "," assignment | assignment;
 assignment  -> IDENTIFIER "=" assignment | conditional;
@@ -47,4 +49,5 @@ primary     -> NUMBER | STRING | IDENTIFIER | "true" | "false" | "nil" |
 |            | Print      | printStmt                                     |
 |            | Var        | varDecl                                       |
 |            | If         | ifStmt                                        |
-|            | While      | whileStmt                                     |
+|            | While      | whileStmt, forStmt                            |
+|            | Break      | breaktStmt                                    |

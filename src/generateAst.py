@@ -33,6 +33,7 @@ def main():
         ["Var", ["Token name", "Expr initializer"]],
         ["If", ["Expr condition", "Stmt thenBranch", "Stmt elseBranch"]],
         ["While", ["Expr condition", "Stmt body"]],
+        ["Break", ["Token token"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 

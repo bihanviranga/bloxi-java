@@ -32,6 +32,7 @@ class Scanner {
     keywords.put("true", TokenType.TRUE);
     keywords.put("var", TokenType.VAR);
     keywords.put("while", TokenType.WHILE);
+    keywords.put("break", TokenType.BREAK);
   }
 
   Scanner(String source) {

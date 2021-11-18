@@ -65,7 +65,16 @@ class Parser {
     if (match(TokenType.FOR))
       return forStatement();
 
+    if (match(TokenType.BREAK))
+      return breakStatement();
+
     return expressionStatement();
+  }
+
+  private Stmt breakStatement() {
+    Token token = previous();
+    consume(TokenType.SEMICOLON, "Expected ';' after 'break'.");
+    return new Stmt.Break(token);
   }
 
   private Stmt forStatement() {

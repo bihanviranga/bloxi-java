@@ -4,6 +4,8 @@ import java.util.List;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   private Environment environment = new Environment();
+  private boolean insideLoop = false;
+  private boolean breakFlag = false;
 
   void interpret(List<Stmt> statements) {
     try {
@@ -180,8 +182,24 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   @Override
   public Void visitWhileStmt(Stmt.While stmt) {
+    insideLoop = true;
     while (isTruthy(evaluate(stmt.condition))) {
       execute(stmt.body);
+      if (breakFlag) {
+        breakFlag = false;
+        break;
+      }
+    }
+    insideLoop = false;
+    return null;
+  }
+
+  @Override
+  public Void visitBreakStmt(Stmt.Break stmt) {
+    if (insideLoop) {
+      breakFlag = true;
+    } else {
+      throw new RuntimeError(stmt.token, "'break' is allowed only inside loops.");
     }
     return null;
   }
