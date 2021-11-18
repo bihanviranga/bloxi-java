@@ -91,7 +91,20 @@ class Parser {
     if (match(TokenType.BREAK))
       return breakStatement();
 
+    if (match(TokenType.RETURN))
+      return returnStatement();
+
     return expressionStatement();
+  }
+
+  private Stmt returnStatement() {
+    Token keyword = previous();
+    Expr value = null;
+    if (!check(TokenType.SEMICOLON))
+      value = expression();
+
+    consume(TokenType.SEMICOLON, "Expected ';' after return.");
+    return new Stmt.Return(keyword, value);
   }
 
   private Stmt breakStatement() {

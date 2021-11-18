@@ -255,6 +255,18 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     return null;
   }
 
+  @Override
+  public Void visitReturnStmt(Stmt.Return stmt) {
+    Object value = null;
+    if (stmt.value != null)
+      value = evaluate(stmt.value);
+
+    // Return statement in a function can be nested inside blocks, loops,
+    // or conditionals. To break out of all these on return, we are throwing
+    // an exception.
+    throw new Return(value);
+  }
+
   private Object evaluate(Expr expr) {
     return expr.accept(this);
   }

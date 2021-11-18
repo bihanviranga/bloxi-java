@@ -9,7 +9,7 @@ function    -> IDENTIFIER "(" parameters? ")" block;
 parameters  -> IDENTIFIER ("," IDENTIFIER)*;
 varDecl     -> "var" IDENTIFIER ("=" expression)? ";";
 statement   -> exprStmt | printStmt | ifStmt | whileStmt | forStmt | breakStmt |
-               block;
+               returnStmt | block;
 block       -> "{" declaration "}";
 exprStmt    -> expression ";";
 printStmt   -> "print" expression ";";
@@ -19,6 +19,7 @@ forStmt     -> "for" "(" (varDecl | exprStmt | ";")
                expression? ";"
                expression? ")" statement;
 breakStmt   -> "break" ";";
+returnStmt  -> "return" expression? ";";
 expression  -> separator;
 separator   -> assignment "," assignment | assignment;
 assignment  -> IDENTIFIER "=" assignment | conditional;
