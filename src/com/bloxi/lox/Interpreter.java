@@ -1,11 +1,34 @@
 package com.bloxi.lox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
-  private Environment environment = new Environment();
+  final Environment globals = new Environment();
+  private Environment environment = globals;
+  // NOTE: These flags are better suited inside an environment
   private boolean insideLoop = false;
   private boolean breakFlag = false;
+
+  Interpreter() {
+    // a native function
+    globals.define("clock", new LoxCallable() {
+      @Override
+      public int arity() {
+        return 0;
+      }
+
+      @Override
+      public Object call(Interpreter interpreter, List<Object> arguments) {
+        return (double) System.currentTimeMillis() / 1000.0;
+      }
+
+      @Override
+      public String toString() {
+        return "<native fn>";
+      }
+    });
+  }
 
   void interpret(List<Stmt> statements) {
     try {
@@ -144,6 +167,27 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     return evaluate(expr.right);
+  }
+
+  @Override
+  public Object visitCallExpr(Expr.Call expr) {
+    Object callee = evaluate(expr.callee);
+
+    List<Object> arguments = new ArrayList<>();
+    for (Expr argument : expr.arguments) {
+      arguments.add(evaluate(argument));
+    }
+
+    if (!(callee instanceof LoxCallable)) {
+      throw new RuntimeError(expr.paren, "Can only call functions and classes.");
+    }
+
+    LoxCallable function = (LoxCallable) callee;
+    if (arguments.size() != function.arity()) {
+      String errorMsg = String.format("Expected %d arguments but got %d.", function.arity(), arguments.size());
+      throw new RuntimeError(expr.paren, errorMsg);
+    }
+    return function.call(this, arguments);
   }
 
   @Override

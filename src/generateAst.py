@@ -21,6 +21,7 @@ def main():
         ["Variable", ["Token name"]],
         ["Assign", ["Token name", "Expr value"]],
         ["Logical", ["Expr left", "Token operator", "Expr right"]],
+        ["Call", ["Expr callee", "Token paren", "List<Expr> arguments"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 
