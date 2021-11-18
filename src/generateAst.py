@@ -35,6 +35,7 @@ def main():
         ["If", ["Expr condition", "Stmt thenBranch", "Stmt elseBranch"]],
         ["While", ["Expr condition", "Stmt body"]],
         ["Break", ["Token token"]],
+        ["Function", ["Token name", "List<Token> params", "List<Stmt> body"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 
