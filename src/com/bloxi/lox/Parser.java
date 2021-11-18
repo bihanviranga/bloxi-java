@@ -533,7 +533,10 @@ class Parser {
         if (arguments.size() >= 255) {
           error(peek(), "Can't have more than 255 arguments.");
         }
-        arguments.add(expression());
+        // We are putting assignment here instead of expression
+        // because otherwise the commas in the function call will be parsed by
+        // 'separator'.
+        arguments.add(assignment());
       } while (match(TokenType.COMMA));
     }
 
