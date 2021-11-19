@@ -9,8 +9,6 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   final Environment globals = new Environment();
   private Environment environment = globals;
   private final Map<Expr, Integer> locals = new HashMap<>();
-  // NOTE: These flags are better suited inside an environment
-  private boolean insideLoop = false;
   private boolean breakFlag = false;
 
   Interpreter() {
@@ -236,7 +234,6 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   @Override
   public Void visitWhileStmt(Stmt.While stmt) {
-    insideLoop = true;
     while (isTruthy(evaluate(stmt.condition))) {
       execute(stmt.body);
       if (breakFlag) {
@@ -244,17 +241,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         break;
       }
     }
-    insideLoop = false;
     return null;
   }
 
   @Override
   public Void visitBreakStmt(Stmt.Break stmt) {
-    if (insideLoop) {
-      breakFlag = true;
-    } else {
-      throw new RuntimeError(stmt.token, "'break' is allowed only inside loops.");
-    }
+    breakFlag = true;
     return null;
   }
 
