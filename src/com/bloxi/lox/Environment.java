@@ -49,4 +49,24 @@ class Environment {
 
     throw new RuntimeError(name, String.format("Assigning to undefined variable: %s", name.lexeme));
   }
+
+  /** Get a variable from nth ancestor of environment */
+  Object getAt(int distance, String name) {
+    return ancestor(distance).values.get(name);
+  }
+
+  /** Change a variable in the nth ancestor of environment */
+  void assignAt(int distance, Token name, Object value) {
+    ancestor(distance).values.put(name.lexeme, value);
+  }
+
+  /** Get the nth ancestor of enviroment */
+  Environment ancestor(int distance) {
+    Environment environment = this;
+    for (int i = 0; i < distance; i++) {
+      environment = environment.enclosing;
+    }
+    return environment;
+  }
+
 }
