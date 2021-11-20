@@ -37,6 +37,7 @@ def main():
         ["Break", ["Token token"]],
         ["Function", ["Token name", "List<Token> params", "List<Stmt> body"]],
         ["Return", ["Token keyword", "Expr value"]],
+        ["Class", ["Token name", "List<Stmt.Function> methods"]],
     ]
     defineAst(outputDir, baseName, astTypes)
 

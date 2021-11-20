@@ -3,7 +3,8 @@
 ## Grammar productions
 ```
 program     -> declaration* EOF;
-declaration -> funDecl | varDecl | statement;
+declaration -> funDecl | varDecl | classDecl | statement;
+classDecl   -> "class" IDENTIFIER "{" function* "}";
 funDecl     -> "fun" function;
 function    -> IDENTIFIER "(" parameters? ")" block;
 parameters  -> IDENTIFIER ("," IDENTIFIER)*;
