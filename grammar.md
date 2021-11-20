@@ -23,7 +23,7 @@ breakStmt   -> "break" ";";
 returnStmt  -> "return" expression? ";";
 expression  -> separator;
 separator   -> assignment "," assignment | assignment;
-assignment  -> IDENTIFIER "=" assignment | conditional;
+assignment  -> (call ".")? IDENTIFIER "=" assignment | conditional;
 conditional -> logical_or "?" conditional ":" conditional | logical_or;
 logical_or  -> logical_and ("or" logical_and)*;
 logical_and -> equality ("and" equality)*;
@@ -32,7 +32,7 @@ comparison  -> term ((">" | ">=" | "<" | "<=") term)*;
 term        -> factor (("+" | "-") factor)*;
 factor      -> unary (("*" | "/") unary)*;
 unary       -> ("!" | "-") unary | call;
-call        -> primary ("(" arguments? ")")*;
+call        -> primary ("(" arguments? ")" | "." IDENTIFIER)*;
 arguments   -> expression ("," expression)*;
 primary     -> NUMBER | STRING | IDENTIFIER | "true" | "false" | "nil" |
                "(" expression ")";

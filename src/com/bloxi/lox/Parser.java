@@ -227,10 +227,13 @@ class Parser {
       Token equals = previous();
       Expr value = assignment();
 
-      // The lhs can't be any Expr. It must be a Expr.Variable
+      // The lhs must be a Expr.Variable or a getter (Expr.Get)
       if (expr instanceof Expr.Variable) {
         Token name = ((Expr.Variable) expr).name;
         return new Expr.Assign(name, value);
+      } else if (expr instanceof Expr.Get) {
+        Expr.Get get = (Expr.Get) expr;
+        return new Expr.Set(get.object, get.name, value);
       }
 
       error(equals, "Cannot assign. Invalid target.");
@@ -343,6 +346,9 @@ class Parser {
     while (true) {
       if (match(TokenType.LEFT_PAREN)) {
         expr = finishCall(expr);
+      } else if (match(TokenType.DOT)) {
+        Token name = consume(TokenType.IDENTIFIER, "Expected property name after '.'.");
+        expr = new Expr.Get(expr, name);
       } else {
         break;
       }
