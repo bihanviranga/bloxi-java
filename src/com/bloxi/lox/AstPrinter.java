@@ -45,6 +45,48 @@ class AstPrinter implements Expr.Visitor<String> {
     return builder.toString();
   }
 
+  @Override
+  public String visitVariableExpr(Expr.Variable expr) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String visitAssignExpr(Expr.Assign expr) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String visitLogicalExpr(Expr.Logical expr) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String visitCallExpr(Expr.Call expr) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String visitGetExpr(Expr.Get expr) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String visitSetExpr(Expr.Set expr) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String visitThisExpr(Expr.This expr) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
   // NOTE: Driver code for testing
   // public static void main(String[] args) {
   //// 1 + 2 ? 3 * 4 : 5 / 6;
