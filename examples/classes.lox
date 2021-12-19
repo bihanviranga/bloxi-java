@@ -1,0 +1,34 @@
+class Parent {
+  parentMethod() {
+    print "Parent::parentOnlyMethod called!";
+  }
+
+  overriddenMethod() {
+    print "Parent::overriddenMethod called!";
+  }
+
+  superMethod() {
+    print "Parent::superMethod called!";
+  }
+}
+
+class Child < Parent {
+  childMethod() {
+    print "Child::childMethod called!";
+  }
+
+  overriddenMethod() {
+    print "Child::overriddenMethod called!";
+  }
+
+  superMethod() {
+    super.superMethod();
+    print "Child::superMethod called!";
+  }
+}
+
+var childInstance = Child();
+childInstance.childMethod();
+childInstance.parentMethod();
+childInstance.overriddenMethod();
+childInstance.superMethod();
