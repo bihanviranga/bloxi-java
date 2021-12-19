@@ -1,4 +1,7 @@
-# (B)ihan's (Lox) (I)ntepreter
+# Bloxi - An AST Interpreter for Lox
+Bloxi is an AST interpreter for the [Lox programming language](http://www.craftinginterpreters.com/appendix-i.html). The interpreter is written in Java. It is a dynamically typed language with support for some object oriented features. The interpreter does no optimizations, but sometimes scans ahead to detect errors before execution.
+
+There are still some bugs.
 
 ## Running
 ### Bash script
