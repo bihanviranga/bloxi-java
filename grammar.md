@@ -35,7 +35,7 @@ unary       -> ("!" | "-") unary | call;
 call        -> primary ("(" arguments? ")" | "." IDENTIFIER)*;
 arguments   -> expression ("," expression)*;
 primary     -> NUMBER | STRING | IDENTIFIER | "true" | "false" | "nil" |
-               "(" expression ")";
+               "(" expression ")" | "super" "." IDENTIFIER;
 ```
 
 ## Representations
@@ -50,6 +50,7 @@ primary     -> NUMBER | STRING | IDENTIFIER | "true" | "false" | "nil" |
 |            | Variable   | primary                                       |
 |            | Assign     | assignment                                    |
 |            | Logical    | logical\_and, logical\_or                     |
+|            | Super      | primary                                       |
 | Stmt       |            |                                               |
 |            | Block      | block                                         |
 |            | Expression | exprStmt                                      |
