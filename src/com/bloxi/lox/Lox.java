@@ -80,7 +80,7 @@ public class Lox {
     if (token.type == TokenType.EOF) {
       report(token.line, "at EOF", message);
     } else {
-      report(token.line, String.format("at %s", token.lexeme), message);
+      report(token.line, String.format("at '%s'", token.lexeme), message);
     }
   }
 

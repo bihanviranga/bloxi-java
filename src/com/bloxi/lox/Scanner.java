@@ -145,7 +145,7 @@ class Scanner {
           // including reserved words
           identifier();
         } else {
-          Lox.error(line, String.format("Unexpected character:  %c", c));
+          Lox.error(line, String.format("Unexpected character: %c", c));
         }
         break;
     }
